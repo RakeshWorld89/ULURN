@@ -1,5 +1,5 @@
 //
-//  CourseDetailsBreakupTableViewCell.swift
+//  CourseModuleDetailsTableViewCell.swift
 //  ULURN
 //
 //  Created by Rakesh Chakraborty on 20/05/24.
@@ -7,8 +7,10 @@
 
 import UIKit
 
-class CourseDetailsBreakupTableViewCell: UITableViewCell {
+class CourseModuleDetailsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var courseModuleDetailNameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +21,4 @@ class CourseDetailsBreakupTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }

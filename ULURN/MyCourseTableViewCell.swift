@@ -1,5 +1,5 @@
 //
-//  CourseDetailsTableViewCell.swift
+//  MyCourseTableViewCell.swift
 //  ULURN
 //
 //  Created by Rakesh Chakraborty on 19/05/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CourseDetailsTableViewCell: UITableViewCell {
+class MyCourseTableViewCell: UITableViewCell {
     
     @IBOutlet weak var courseNameLabel: UILabel!
     @IBOutlet weak var lecturesCountLabel: UILabel!
