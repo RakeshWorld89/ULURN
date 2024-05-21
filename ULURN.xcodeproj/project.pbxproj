@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E15D88694DADB66C62EA21E /* Pods_ULURN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8FAB05917EC939BF19CC0EA /* Pods_ULURN.framework */; };
 		612C286B2BFCA927009C4006 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612C286A2BFCA927009C4006 /* Extensions.swift */; };
 		612C286D2BFCAEC8009C4006 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612C286C2BFCAEC8009C4006 /* AccountViewController.swift */; };
 		6169F1A02BF7CC0A00B95C47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169F19F2BF7CC0A00B95C47 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F8ED4442A3769761A38D595 /* Pods-ULURN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ULURN.release.xcconfig"; path = "Target Support Files/Pods-ULURN/Pods-ULURN.release.xcconfig"; sourceTree = "<group>"; };
 		612C286A2BFCA927009C4006 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		612C286C2BFCAEC8009C4006 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6169F19C2BF7CC0A00B95C47 /* ULURN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ULURN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +48,8 @@
 		61CABCB92BFB37BC0021D45F /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 		61CABCBB2BFB3B530021D45F /* CourseModuleDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseModuleDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		61CABCBC2BFB3B530021D45F /* CourseModuleDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CourseModuleDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		AD942B8E24A8EB9A46E989B0 /* Pods-ULURN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ULURN.debug.xcconfig"; path = "Target Support Files/Pods-ULURN/Pods-ULURN.debug.xcconfig"; sourceTree = "<group>"; };
+		F8FAB05917EC939BF19CC0EA /* Pods_ULURN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ULURN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E15D88694DADB66C62EA21E /* Pods_ULURN.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +69,8 @@
 			children = (
 				6169F19E2BF7CC0A00B95C47 /* ULURN */,
 				6169F19D2BF7CC0A00B95C47 /* Products */,
+				E0FDE145A91F39CE7401402E /* Pods */,
+				83582D8BE7511C9694458B2F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +107,23 @@
 			path = ULURN;
 			sourceTree = "<group>";
 		};
+		83582D8BE7511C9694458B2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F8FAB05917EC939BF19CC0EA /* Pods_ULURN.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E0FDE145A91F39CE7401402E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AD942B8E24A8EB9A46E989B0 /* Pods-ULURN.debug.xcconfig */,
+				5F8ED4442A3769761A38D595 /* Pods-ULURN.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -107,9 +131,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6169F1B02BF7CC0B00B95C47 /* Build configuration list for PBXNativeTarget "ULURN" */;
 			buildPhases = (
+				16A3E3A1C1E3EDE79957291A /* [CP] Check Pods Manifest.lock */,
 				6169F1982BF7CC0A00B95C47 /* Sources */,
 				6169F1992BF7CC0A00B95C47 /* Frameworks */,
 				6169F19A2BF7CC0A00B95C47 /* Resources */,
+				5E0099C873ACFF3CCCE68E69 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +194,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16A3E3A1C1E3EDE79957291A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ULURN-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E0099C873ACFF3CCCE68E69 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ULURN/Pods-ULURN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ULURN/Pods-ULURN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ULURN/Pods-ULURN-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6169F1982BF7CC0A00B95C47 /* Sources */ = {
@@ -247,7 +315,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -310,7 +378,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -331,9 +399,11 @@
 		};
 		6169F1B12BF7CC0B00B95C47 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD942B8E24A8EB9A46E989B0 /* Pods-ULURN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -358,9 +428,11 @@
 		};
 		6169F1B22BF7CC0B00B95C47 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F8ED4442A3769761A38D595 /* Pods-ULURN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
