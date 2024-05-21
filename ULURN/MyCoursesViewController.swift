@@ -19,6 +19,12 @@ class MyCoursesViewController: UIViewController {
         self.myCoursesTableView.register(UINib(nibName: "MyCourseTableViewCell", bundle: nil), forCellReuseIdentifier: "MyCourseTableViewCell")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide the Navigation Bar
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     @IBAction func tapHiddenCoursesAction(_ sender: Any) {
         
     }

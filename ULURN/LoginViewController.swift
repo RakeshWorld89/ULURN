@@ -9,12 +9,21 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var mainContentView: UIView!
+    @IBOutlet weak var userNameView: UIView!
     @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet weak var passwordView: UIView!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillLayoutSubviews() {
+        mainContentView.roundCorners([.topLeft, .topRight], radius: 12)
+        userNameView.roundCorners([.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 25.0)
+        passwordView.roundCorners([.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 25.0)
     }
 }
 
@@ -52,6 +61,16 @@ extension LoginViewController {
     
     @IBAction func tapRegisterAction(_ sender: Any) {
         
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.userNameTextField {
+            UserDefaults.standard.setValue(textField.text, forKey: "username")
+        }
+        textField.resignFirstResponder()
     }
 }
 

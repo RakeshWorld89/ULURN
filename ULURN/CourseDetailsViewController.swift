@@ -17,6 +17,10 @@ class CourseDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.navigationController?.navigationBar.topItem?.title = courseNameSelected
+//        self.navigationController?.navigationBar.backItem?.title = ""
 
         // Do any additional setup after loading the view.
         courseNameLabel.text = courseNameSelected
@@ -25,6 +29,22 @@ class CourseDetailsViewController: UIViewController {
         self.courseDetailsTableView.rowHeight = UITableView.automaticDimension
         self.courseDetailsTableView.tableFooterView = nil
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Show the Navigation Bar
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.navigationBar.topItem?.title = courseNameSelected
+        self.navigationController?.navigationBar.backItem?.title = ""
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Hide the Navigation Bar
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.navigationBar.topItem?.title = ""
+    }
+    
     
     @IBAction func tapRefreshCourseDetailsButtonAction(_ sender: Any) {
         

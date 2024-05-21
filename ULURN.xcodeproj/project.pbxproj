@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		612C286B2BFCA927009C4006 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612C286A2BFCA927009C4006 /* Extensions.swift */; };
+		612C286D2BFCAEC8009C4006 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612C286C2BFCAEC8009C4006 /* AccountViewController.swift */; };
 		6169F1A02BF7CC0A00B95C47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169F19F2BF7CC0A00B95C47 /* AppDelegate.swift */; };
 		6169F1A22BF7CC0B00B95C47 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169F1A12BF7CC0B00B95C47 /* SceneDelegate.swift */; };
 		6169F1A42BF7CC0B00B95C47 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6169F1A32BF7CC0B00B95C47 /* LoginViewController.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		612C286A2BFCA927009C4006 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		612C286C2BFCAEC8009C4006 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6169F19C2BF7CC0A00B95C47 /* ULURN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ULURN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6169F19F2BF7CC0A00B95C47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6169F1A12BF7CC0B00B95C47 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +81,8 @@
 				6169F19F2BF7CC0A00B95C47 /* AppDelegate.swift */,
 				6169F1A12BF7CC0B00B95C47 /* SceneDelegate.swift */,
 				6169F1A32BF7CC0B00B95C47 /* LoginViewController.swift */,
+				612C286A2BFCA927009C4006 /* Extensions.swift */,
+				612C286C2BFCAEC8009C4006 /* AccountViewController.swift */,
 				61CABCB92BFB37BC0021D45F /* CourseDetailsViewController.swift */,
 				619E244C2BFBB64200ECF261 /* CourseModuleDetailsData.swift */,
 				619E24482BFBA0C600ECF261 /* CourseModuleTableViewHeader.swift */,
@@ -173,10 +179,12 @@
 				6169F1A02BF7CC0A00B95C47 /* AppDelegate.swift in Sources */,
 				619E244D2BFBB64200ECF261 /* CourseModuleDetailsData.swift in Sources */,
 				617290B52BFA5243006C295E /* MyCourseTableViewCell.swift in Sources */,
+				612C286B2BFCA927009C4006 /* Extensions.swift in Sources */,
 				6169F1A22BF7CC0B00B95C47 /* SceneDelegate.swift in Sources */,
 				619E24492BFBA0C600ECF261 /* CourseModuleTableViewHeader.swift in Sources */,
 				617290B82BFA53E4006C295E /* MyCoursesViewController.swift in Sources */,
 				61CABCBD2BFB3B530021D45F /* CourseModuleDetailsTableViewCell.swift in Sources */,
+				612C286D2BFCAEC8009C4006 /* AccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
