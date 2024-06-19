@@ -7,5 +7,7 @@ target 'ULURN' do
 
   # Pods for ULURN
   pod 'IQKeyboardManagerSwift'
-
+  pod 'SwipeMenuViewController'
+  pod 'MBProgressHUD'
+  pod 'Alamofire', '~> 4.9.1'
 end

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import MBProgressHUD
 
 extension UIView {
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
@@ -76,5 +77,32 @@ extension String {
         }
         let diff = Calendar.current.dateComponents([.weekOfYear], from: date, to: Date()).weekOfYear ?? 0
         return "\(diff) w"
+    }
+}
+
+extension Double {
+    func secondsToVideoTime() -> String {
+        let secondsAsInteger = Int(self)
+        let (h,m,s) = (secondsAsInteger / 3600, (secondsAsInteger % 3600) / 60, (secondsAsInteger % 3600) % 60)
+        let h_string = h < 10 ? "0\(h)" : "\(h)"
+        let m_string =  m < 10 ? "0\(m)" : "\(m)"
+        let s_string =  s < 10 ? "0\(s)" : "\(s)"
+        
+        return "\(h_string):\(m_string):\(s_string)"
+    }
+}
+
+
+extension UIViewController {
+    func showIndicator(withTitle loaderTitle: String, and loaderDescription: String) -> MBProgressHUD {
+        let activityIndicator = MBProgressHUD.showAdded(to: self.view, animated: true)
+        activityIndicator.label.text = loaderTitle
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.detailsLabel.text = loaderDescription
+        activityIndicator.contentColor = .red
+        activityIndicator.bezelView.color = UIColor(red: 247.0/255.0, green: 245.0/255.0, blue: 174.0/255.0, alpha: 1.0)
+        activityIndicator.animationType = .zoomIn
+        activityIndicator.show(animated: true)
+        return activityIndicator
     }
 }

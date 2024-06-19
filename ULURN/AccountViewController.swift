@@ -9,9 +9,18 @@ import UIKit
 
 class AccountViewController: UIViewController {
 
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userEmailLabel: UILabel!
+    @IBOutlet weak var userPhoneLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        userNameLabel.text = UserDefaults.standard.string(forKey: Constants.LOGGED_IN_USERNAME)
+        userEmailLabel.text = UserDefaults.standard.string(forKey: Constants.LOGGED_IN_EMAIL_ID)
+        userPhoneLabel.text = UserDefaults.standard.string(forKey: Constants.MOBILE_NUMBER)
+        
         // Do any additional setup after loading the view.
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         let barButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOutButtonTapped(_:)))
@@ -19,6 +28,7 @@ class AccountViewController: UIViewController {
     }
     
     @objc func logOutButtonTapped(_ sender: UIBarButtonItem) {
+        UserDefaults.standard.removeObject(forKey: Constants.LOGGED_IN_EMAIL_ID)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
         

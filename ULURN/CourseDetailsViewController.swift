@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class CourseDetailsViewController: UIViewController {
     
@@ -13,28 +14,37 @@ class CourseDetailsViewController: UIViewController {
     @IBOutlet weak var courseDetailsTableView: UITableView!
     
     var courseNameSelected: String?
-    var courseModules = courseModuleData
+    var courseIdSelected: Int?
+    //var courseModules = courseModuleData
+    var courseModules: [SectionDetailsData] = []
+    var courseModuleName: String?
+    var activityIndicatorView: MBProgressHUD!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.navigationController?.navigationBar.topItem?.title = courseNameSelected
-//        self.navigationController?.navigationBar.backItem?.title = ""
-
         // Do any additional setup after loading the view.
         courseNameLabel.text = courseNameSelected
         self.courseDetailsTableView.register(UINib(nibName: "CourseModuleTableViewHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "CourseModuleTableViewHeader")
         self.courseDetailsTableView.register(UINib(nibName: "CourseModuleDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "CourseModuleDetailsTableViewCell")
         self.courseDetailsTableView.rowHeight = UITableView.automaticDimension
         self.courseDetailsTableView.tableFooterView = nil
+        
+        self.activityIndicatorView = showIndicator(withTitle: "", and: "Loading Chapters...")
+        AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
+            if isTokenGenerated == true {
+                self.loadAllCourseSectionsAndItsChapters()
+            } else {
+                
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Show the Navigation Bar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.topItem?.title = courseNameSelected
+        //self.navigationController?.navigationBar.topItem?.title = courseNameSelected
         self.navigationController?.navigationBar.backItem?.title = ""
     }
 
@@ -43,6 +53,24 @@ class CourseDetailsViewController: UIViewController {
         // Hide the Navigation Bar
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.navigationBar.topItem?.title = ""
+    }
+    
+    func loadAllCourseSectionsAndItsChapters() {
+        ApiManager.fetchAllSectionsAndChapters(userId: UserDefaults.standard.value(forKey: Constants.LOGGED_IN_USER_ID) as! Int, productId: courseIdSelected!) { [weak self] response, error in
+            self?.activityIndicatorView.hide(animated: true)
+            if response?.isSuccess == true {
+                let courseDetailsData = (response?.responseData ?? "").data(using: .utf8)
+                let courseDetailsDecoder = JSONDecoder()
+                if let courseDetailsModel = try? courseDetailsDecoder.decode([SectionDetailsData].self, from: courseDetailsData!) {
+                    print(courseDetailsModel)
+                    self?.courseModules = courseDetailsModel
+                    self?.courseDetailsTableView.reloadData()
+                }
+            } else {
+                let errorMessage = (response?.responseData)?.components(separatedBy: ":")
+                AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
+            }
+        }
     }
     
     
@@ -58,17 +86,29 @@ extension CourseDetailsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return courseModules[section].collapsed ? 0 : courseModules[section].items.count
+        return courseModules[section].collapsed! ? 0 : courseModules[section].chapters.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CourseModuleDetailsTableViewCell", for: indexPath) as! CourseModuleDetailsTableViewCell
         
-        let item: Item = courseModules[indexPath.section].items[indexPath.row]
-        cell.courseModuleDetailNameLabel.text = item.name
+        let chapter: ChapterDetailsData = courseModules[indexPath.section].chapters[indexPath.row]
+        let sectionNumberPrefix = courseModules[indexPath.section].sectionId
+        let chapterNumberPrefix = "\(sectionNumberPrefix ?? 0)" + ".\(indexPath.row + 1) -> "
+        cell.courseModuleDetailNameLabel.text = "\(chapterNumberPrefix)" + chapter.chapterName!
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedChapterCell = tableView.cellForRow(at: indexPath) as! CourseModuleDetailsTableViewCell
+        
+        let chapterDetailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChapterDetailsViewController") as! ChapterDetailsViewController
+        chapterDetailsVC.courseAndModuleName = self.courseModuleName
+        chapterDetailsVC.chapterName = selectedChapterCell.courseModuleDetailNameLabel.text
+        chapterDetailsVC.chapterId = courseModules[indexPath.section].chapters[indexPath.row].chapterId
+        self.navigationController?.pushViewController(chapterDetailsVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,9 +121,10 @@ extension CourseDetailsViewController: UITableViewDataSource, UITableViewDelegat
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CourseModuleTableViewHeader") as! CourseModuleTableViewHeader
         header.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCourseModuleHeader(_:))))
         
-        header.courseModuleNameLabel.text = courseModules[section].name
-        header.codeNumberLabel.text = courseModules[section].code
-        header.setCollapsed(courseModules[section].collapsed)
+        header.courseModuleNameLabel.text = courseModules[section].sectionName
+        self.courseModuleName = header.courseModuleNameLabel.text
+        header.codeNumberLabel.text = "\(courseModules[section].sectionId ?? 0)"
+        header.setCollapsed(courseModules[section].collapsed!)
         
         header.section = section
         header.delegate = self
@@ -115,10 +156,10 @@ extension CourseDetailsViewController: CourseModuleTableViewHeaderDelegate {
     
     func toggleSection(_ header: CourseModuleTableViewHeader, section: Int) {
         
-        let collapsed = !courseModules[section].collapsed
+        let sectionCollapsed = !courseModules[section].collapsed!
         // Toggle collapse
-        courseModules[section].collapsed = collapsed
-        header.setCollapsed(collapsed)
+        courseModules[section].collapsed = sectionCollapsed
+        header.setCollapsed(sectionCollapsed)
         
         self.courseDetailsTableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
     }
