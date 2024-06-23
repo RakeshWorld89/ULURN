@@ -16,8 +16,11 @@ struct Constants {
     static let IMAGE_BASE_URL = ""
     
     //MARK: - Error Messages -
+    static let ULURN_APP = "ULURN"
     static let UNKNOWN_ERROR_TITLE = "ERROR"
     static let UNKNOWN_ERROR_MESSAGE = "An unknown error occured. Please try again later."
+    static let LECTURE_PLAYER_ERROR_MESSAGE = "Lecture duration has exhausted! Please try later."
+    static let LECTURE_HISTORY_UPLOADED_MESSAGE = "Lecture history uploaded successfully."
     
     //MARK: - TOKEN GENERATION EMAIL & PASSWORD -
     static let emailIdForToken = "offlinedemo@gmail.com"
@@ -35,10 +38,12 @@ struct Constants {
     static let getAllSectionsAndChapters = "ProductSectionWithTopic"
     static let getAllProductLectures = "ProductLectures"
     static let lectureDetails = "LectureDetail"
+    static let saveLecturePlayHistory = "SavePlayHistoryWithRemainDuration"
     static let getProfile = ""
     static let getFAQs = ""
     
     //MARK: - User Defaults Key Names -
+    static let IS_FIRST_LOGIN = "isFirstLogin"
     static let TOKEN_STRING = "tokenString"
     static let LOGGED_IN_USER_ID = "userId"
     static let LOGGED_IN_EMAIL_ID = "emailId"

@@ -210,4 +210,43 @@ class CoreDataManager {
             return nil
         }
     }
+    
+    func fetchLastLectureId(chapterId: Int) -> Int {
+        var lastLectureId = 0
+        
+        /*Before you can do anything with Core Data, you need a managed object context. */
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        /*As the name suggests, NSFetchRequest is the class responsible for fetching from Core Data.
+         
+         Initializing a fetch request with init(entityName:), fetches all objects of a particular entity. This is what you do here to fetch all Person entities.
+         */
+        let sortDescriptor = NSSortDescriptor(key: "serialNumber", ascending: false)
+        let predicate = NSPredicate(format: "chapterId == %d", chapterId)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Lecture")
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 1
+        
+        /*You hand the fetch request over to the managed object context to do the heavy lifting. fetch(_:) returns an array of managed objects meeting the criteria specified by the fetch request.*/
+        do {
+            let lectureWithMaximumSerialNumber = try managedContext.fetch(fetchRequest)
+            lastLectureId = lectureWithMaximumSerialNumber.first?.value(forKey: "lectureUniqueId") as! Int
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            return lastLectureId
+        }
+        return lastLectureId
+    }
+    
+    func clearAllDataAndResetDB() {
+        guard let url = persistentContainer.persistentStoreDescriptions.first?.url else { return }
+        let persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        do {
+            try persistentStoreCoordinator.destroyPersistentStore(at: url, ofType: NSSQLiteStoreType, options: nil)
+            try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+        } catch {
+            print("Attempted to clear persistent store: " + error.localizedDescription)
+        }
+    }
 }

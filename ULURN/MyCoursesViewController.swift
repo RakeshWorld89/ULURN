@@ -28,19 +28,24 @@ class MyCoursesViewController: UIViewController {
         super.viewWillAppear(animated)
         // Hide the Navigation Bar
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
-            if isTokenGenerated == true {
-                self.fetchAllCourses()
-            } else {
-                
+        if UserDefaults.standard.string(forKey: Constants.IS_FIRST_LOGIN) == "No" {
+            activityIndicatorView = showIndicator(withTitle: "", and: "Refreshing Courses...")
+            AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
+                if isTokenGenerated == true {
+                    self.fetchAllCourses()
+                } else {
+                    
+                }
             }
+        } else {
+            self.myCoursesData = CoreDataManager.sharedManager.fetchAllCourses(userId: UserDefaults.standard.value(forKey: Constants.LOGGED_IN_USER_ID) as! Int) ?? []
+            self.myCoursesCountLabel.text = "My Courses(\(self.myCoursesData.count))"
+            self.myCoursesTableView.reloadData()
         }
     }
 
     func fetchAllCourses() {
         if CoreDataManager.sharedManager.fetchAllCourses(userId: UserDefaults.standard.value(forKey: Constants.LOGGED_IN_USER_ID) as! Int)!.count > 0 {
-            activityIndicatorView = showIndicator(withTitle: "", and: "")
             self.checkForAnyNewCourses()
         }
     }
@@ -70,7 +75,7 @@ class MyCoursesViewController: UIViewController {
     }
     
     func saveNewCourseDetailsInDatabase(courseLicenseDetailsModel: [CourseLicenseDetailsData]) {
-        for index in 0..<(courseLicenseDetailsModel.count - 1) {
+        for index in 0..<(courseLicenseDetailsModel.count) {
             CoreDataManager.sharedManager.insertCourseLicenseDetails(courseLicenseDetails: courseLicenseDetailsModel[index])
         }
         self.myCoursesData = CoreDataManager.sharedManager.fetchAllCourses(userId: UserDefaults.standard.value(forKey: Constants.LOGGED_IN_USER_ID) as! Int) ?? []

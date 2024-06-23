@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if UserDefaults.standard.string(forKey: Constants.LOGGED_IN_EMAIL_ID) != nil {
             // instantiate the main tab bar controller and set it as root view controller
             // using the storyboard identifier we set earlier
+            UserDefaults.standard.setValue("No", forKey: Constants.IS_FIRST_LOGIN)
             let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
             window?.rootViewController = mainTabBarController
         } else {

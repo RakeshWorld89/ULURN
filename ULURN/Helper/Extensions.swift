@@ -92,6 +92,12 @@ extension Double {
     }
 }
 
+extension Date {
+    /// Date to Unix timestamp.
+        var unixTimestamp: Int {
+            return Int(self.timeIntervalSince1970 * 1_000) // millisecond precision
+        }
+}
 
 extension UIViewController {
     func showIndicator(withTitle loaderTitle: String, and loaderDescription: String) -> MBProgressHUD {

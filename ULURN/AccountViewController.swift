@@ -29,6 +29,7 @@ class AccountViewController: UIViewController {
     
     @objc func logOutButtonTapped(_ sender: UIBarButtonItem) {
         UserDefaults.standard.removeObject(forKey: Constants.LOGGED_IN_EMAIL_ID)
+        CoreDataManager.sharedManager.clearAllDataAndResetDB()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
         

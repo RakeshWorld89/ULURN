@@ -666,7 +666,7 @@
                                 <rect key="frame" x="0.0" y="182" width="393" height="670"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No lectures available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8X-9S-0YZ">
-                                        <rect key="frame" x="98.333333333333329" y="322" width="196.33333333333337" height="26.333333333333314"/>
+                                        <rect key="frame" x="98.333333333333314" y="322" width="196.33333333333337" height="26.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="textColor" systemColor="systemGrayColor"/>
                                         <nil key="highlightedColor"/>
@@ -716,6 +716,7 @@
                         <viewLayoutGuide key="safeArea" id="e3K-VV-EWe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nvh-Bz-6zh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

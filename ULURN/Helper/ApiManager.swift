@@ -208,4 +208,31 @@ class ApiManager {
                 print(response.result.value ?? "No Response")
             }
     }
+    
+    // MARK: Lecture History With Remaining Duration
+    
+    class func uploadLectureHistoryWithRemainingDuration(userId: Int, productId: Int, lectureId: Int, remainDuration: Double, lectureRemainDuration: Int, playTime: Int, completion: @escaping(_ reponse: LectureHistoryDetailsModel?, _ error: ApiError?) -> Void) {
+     
+        let parameters = ["userId": userId, "productId": productId, "lectureId": lectureId, "remainDuration": remainDuration, "lectureRemainDuration": lectureRemainDuration, "playTime": playTime] as [String : Any]
+        let parametersAsJsonData = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+        let parametersAsJsonString = String(data: parametersAsJsonData!, encoding: .utf8)
+        
+        let requestBody = ["body": parametersAsJsonString ?? "", "headers": ["ServiceType": Constants.saveLecturePlayHistory]] as [String: Any]
+        let request = NetworkRequest.createRequest(httpMethod: HTTPMethod.post.rawValue, tokenString: UserDefaults.standard.string(forKey: Constants.TOKEN_STRING)!, serviceType: Constants.saveLecturePlayHistory, parameter: requestBody)
+        Alamofire.request(request)
+            .responseLectureHistoryDetailsModel { (response) in
+                switch response.result {
+                case .success(let result):
+                    if result.isSuccess == true {
+                        completion(result, nil);
+                    } else {
+                        completion(result, ApiError(domain: .api, code: response.response?.statusCode ?? 0, message: ""))
+                    }
+                case .failure(let error):
+                    completion(nil, ApiError(domain: .system, code: error._code, message: error.localizedDescription))
+                }
+            } .responseString { (response) in
+                print(response.result.value ?? "No Response")
+            }
+    }
 }

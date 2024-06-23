@@ -8,6 +8,10 @@
 import UIKit
 import MBProgressHUD
 
+protocol LastLectureHistoryDetails {
+    func workWithLastLectureHistoryDetails(lectureHistory: [String : Any])
+}
+
 class ChapterDetailsViewController: UIViewController {
  
     @IBOutlet weak var courseAndModuleNameLabel: UILabel!
@@ -22,6 +26,10 @@ class ChapterDetailsViewController: UIViewController {
     var allLecturesData: [Lecture] = []
     var selectedLectureId: Int = 0
     var generatedLectureVideoURL: String?
+    var durationOfSelectedLecture: Double = 0.0
+    var isLecturePlayed: Bool = false
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +38,6 @@ class ChapterDetailsViewController: UIViewController {
         self.chapterNameLabel.text = chapterName
         self.lectureVideosTableView.register(UINib(nibName: "LectureVideoTableViewCell", bundle: nil), forCellReuseIdentifier: "LectureVideoTableViewCell")
         
-        activityIndicatorView = showIndicator(withTitle: "", and: "Loading Lectures...")
-        AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
-            if isTokenGenerated == true {
-                self.fetchAllProductLectures()
-            } else {
-                
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +45,10 @@ class ChapterDetailsViewController: UIViewController {
         // Show the Navigation Bar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.navigationBar.backItem?.title = ""
+        self.appDelegate.orientation = .portrait
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+
+        fetchAllProductLectures()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,34 +59,83 @@ class ChapterDetailsViewController: UIViewController {
     }
     
     func fetchAllProductLectures() {
-        
-        ApiManager.fetchAllLectureDetails(chapterId: self.chapterId ?? 0, lastLectureId: 0) { [weak self] response, error in
-            self?.activityIndicatorView.hide(animated: true)
-            if response?.isSuccess == true {
-                let lectureDetailsData = (response?.responseData ?? "").data(using: .utf8)
-                let lectureDetailsDecoder = JSONDecoder()
-                if let lectureDetailsModel = try? lectureDetailsDecoder.decode([LectureDetailsData].self, from: lectureDetailsData!) {
-                    print(lectureDetailsModel)
-                    
-                    if lectureDetailsModel.count > 0 {
-                        self?.noLecturesAvailableView.isHidden = true
-                        self?.saveLectureDetailsInDatabase(lectureDetailsModel: lectureDetailsModel)
+        self.view.isUserInteractionEnabled = false
+        if CoreDataManager.sharedManager.fetchAllLectures(chapterId: self.chapterId ?? 0)?.count == 0 {
+            activityIndicatorView = showIndicator(withTitle: "", and: "Loading Lectures...")
+            loadAllProductLectures()
+        } else {
+            if self.isLecturePlayed == false {
+                activityIndicatorView = showIndicator(withTitle: "", and: "Refreshing Lectures...")
+                self.noLecturesAvailableView.isHidden = true
+                checkForAnyNewProductLectures()
+            }
+        }        
+    }
+    
+    func loadAllProductLectures() {
+        AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
+            if isTokenGenerated == true {
+                ApiManager.fetchAllLectureDetails(chapterId: self.chapterId ?? 0) { [weak self] response, error in
+                    self?.activityIndicatorView.hide(animated: true)
+                    if response?.isSuccess == true {
+                        let lectureDetailsData = (response?.responseData ?? "").data(using: .utf8)
+                        let lectureDetailsDecoder = JSONDecoder()
+                        if let lectureDetailsModel = try? lectureDetailsDecoder.decode([LectureDetailsData].self, from: lectureDetailsData!) {
+                            print(lectureDetailsModel)
+                            
+                            if lectureDetailsModel.count > 0 {
+                                self?.noLecturesAvailableView.isHidden = true
+                                self?.saveLectureDetailsInDatabase(lectureDetailsModel: lectureDetailsModel)
+                            } else {
+                                self?.noLecturesAvailableView.isHidden = false
+                            }
+                        }
                     } else {
-                        self?.noLecturesAvailableView.isHidden = false
+                        let errorMessage = (response?.responseData)?.components(separatedBy: ":")
+                        AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
                     }
+                    self?.view.isUserInteractionEnabled = true
                 }
             } else {
-                let errorMessage = (response?.responseData)?.components(separatedBy: ":")
-                AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
+                
+            }
+        }
+    }
+    
+    func checkForAnyNewProductLectures() {
+        let lastLectureId = CoreDataManager.sharedManager.fetchLastLectureId(chapterId: self.chapterId ?? 0)
+        AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
+            if isTokenGenerated == true {
+                ApiManager.fetchAllLectureDetails(chapterId: self.chapterId ?? 0, lastLectureId: lastLectureId) { [weak self] response, error in
+                    self?.activityIndicatorView.hide(animated: true)
+                    if response?.isSuccess == true {
+                        let lectureDetailsData = (response?.responseData ?? "").data(using: .utf8)
+                        let lectureDetailsDecoder = JSONDecoder()
+                        if let lectureDetailsModel = try? lectureDetailsDecoder.decode([LectureDetailsData].self, from: lectureDetailsData!) {
+                            print(lectureDetailsModel)
+                            
+                            if lectureDetailsModel.count > 0 {
+                                self?.saveLectureDetailsInDatabase(lectureDetailsModel: lectureDetailsModel)
+                            } else {
+                                self?.allLecturesData = CoreDataManager.sharedManager.fetchAllLectures(chapterId: self?.chapterId ?? 0) ?? []
+                                self?.lectureVideosTableView.reloadData()
+                            }
+                        }
+                    } else {
+                        let errorMessage = (response?.responseData)?.components(separatedBy: ":")
+                        AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
+                    }
+                    self?.view.isUserInteractionEnabled = true
+                }
+            } else {
+                
             }
         }
     }
     
     func saveLectureDetailsInDatabase(lectureDetailsModel: [LectureDetailsData]) {
-        if CoreDataManager.sharedManager.fetchAllLectures(chapterId: self.chapterId ?? 0)?.count == 0 {
-            for index in 0..<(lectureDetailsModel.count) {
-                CoreDataManager.sharedManager.insertLectureDetails(lectureDetails: lectureDetailsModel[index])
-            }
+        for index in 0..<(lectureDetailsModel.count) {
+            CoreDataManager.sharedManager.insertLectureDetails(lectureDetails: lectureDetailsModel[index])
         }
         self.allLecturesData = CoreDataManager.sharedManager.fetchAllLectures(chapterId: self.chapterId ?? 0) ?? []
         self.lectureVideosTableView.reloadData()
@@ -106,7 +159,9 @@ extension ChapterDetailsViewController: UITableViewDataSource, UITableViewDelega
         
         let selectedLectureVideoCell = tableView.cellForRow(at: indexPath) as! LectureVideoTableViewCell
         selectedLectureId = Int(self.allLecturesData[indexPath.row].lectureUniqueId)
-
+        durationOfSelectedLecture = self.allLecturesData[indexPath.row].duration
+        
+        self.view.isUserInteractionEnabled = false
         activityIndicatorView = showIndicator(withTitle: "", and: "Loading...")
         AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
             if isTokenGenerated == true {
@@ -126,19 +181,54 @@ extension ChapterDetailsViewController: UITableViewDataSource, UITableViewDelega
                 if let lectureURLDetailsModel = try? lectureURLDetailsDecoder.decode(LectureURLDetailsData.self, from: lectureURLDetailsData!) {
                     print(lectureURLDetailsModel)
                     self?.generatedLectureVideoURL = lectureURLDetailsModel.finalURL
-                    
-                    self?.moveToPlayerScreen()
+                    if lectureURLDetailsModel.remainingDuration ?? 0.0 > 0.0 {
+                        self?.moveToPlayerScreen(remainingTimeDuration: lectureURLDetailsModel.remainingDuration ?? 0.0, totalLectureDuration: self?.durationOfSelectedLecture ?? 0.0)
+                    } else {
+                        AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: Constants.LECTURE_PLAYER_ERROR_MESSAGE)
+                    }
                 }
             } else {
                 let errorMessage = (response?.responseData)?.components(separatedBy: ":")
                 AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
             }
+            self?.view.isUserInteractionEnabled = true
         }
     }
     
-    func moveToPlayerScreen() {
+    func moveToPlayerScreen(remainingTimeDuration: Double, totalLectureDuration: Double) {
         let lectureVideoPlayerController = LectureVideoPlayerViewController()
+        lectureVideoPlayerController.chapterDetailsVCDelegate = self
         lectureVideoPlayerController.lectureURL = self.generatedLectureVideoURL
+        lectureVideoPlayerController.currentLectureId = self.selectedLectureId
+        lectureVideoPlayerController.totalDuration = totalLectureDuration
+        lectureVideoPlayerController.remainingDuration = remainingTimeDuration
         present(lectureVideoPlayerController, animated: true)
+    }
+}
+
+extension ChapterDetailsViewController: LastLectureHistoryDetails {
+    
+    func workWithLastLectureHistoryDetails(lectureHistory: [String : Any]) {
+        activityIndicatorView = showIndicator(withTitle: "", and: "Uploading Lecture History...")
+        AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
+            if isTokenGenerated == true {
+                ApiManager.uploadLectureHistoryWithRemainingDuration(userId: UserDefaults.standard.value(forKey: Constants.LOGGED_IN_USER_ID) as! Int, productId: UserDefaults.standard.value(forKey: Constants.PRODUCT_ID) as! Int, lectureId: self.selectedLectureId, remainDuration: lectureHistory["remainingDuration"] as! Double, lectureRemainDuration: lectureHistory["lectureRemainingDuration"] as! Int, playTime: lectureHistory["lecturePlayTime"] as! Int) { [weak self] response, error in
+                    self?.activityIndicatorView.hide(animated: true)
+                    if response?.isSuccess == true {
+                        if response?.responseData == "true" {
+                            AppCommon.showAlert(title: Constants.ULURN_APP, message: Constants.LECTURE_HISTORY_UPLOADED_MESSAGE)
+                        } else {
+                            AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: response?.responseData ?? Constants.UNKNOWN_ERROR_MESSAGE)
+                        }
+                    } else {
+                        let errorMessage = (response?.responseData)?.components(separatedBy: ":")
+                        AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
+                    }
+                    self?.view.isUserInteractionEnabled = true
+                }
+            } else {
+                
+            }
+        }
     }
 }

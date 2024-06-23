@@ -3,4 +3,70 @@
    uuid = "268AD2E9-2229-4514-83FF-4D4CF55419E8"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB042C71-D95F-4937-B8B2-D6639BA11AD0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ULURN/ChapterDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "workWithLastLectureHistoryDetails(lectureHistory:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FB042C71-D95F-4937-B8B2-D6639BA11AD0 - 9f3d8015c45af4ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;ULURN.LectureHistoryDetailsModel&gt;, Swift.Optional&lt;ULURN.ApiError&gt;) -&gt; () in closure #1 (Swift.Bool) -&gt; () in ULURN.ChapterDetailsViewController.workWithLastLectureHistoryDetails(lectureHistory: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "ULURN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rakeshchakraborty/Desktop/Project%20Work/Freelance/ULURN%20Project/ULURN/ULURN/ChapterDetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "217"
+                  endingLineNumber = "217"
+                  offsetFromSymbolStart = "668">
+               </Location>
+               <Location
+                  uuid = "FB042C71-D95F-4937-B8B2-D6639BA11AD0 - 9f3d8015c45af4ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;ULURN.LectureHistoryDetailsModel&gt;, Swift.Optional&lt;ULURN.ApiError&gt;) -&gt; () in closure #1 (Swift.Bool) -&gt; () in ULURN.ChapterDetailsViewController.workWithLastLectureHistoryDetails(lectureHistory: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "ULURN"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rakeshchakraborty/Desktop/Project%20Work/Freelance/ULURN%20Project/ULURN/ULURN/ChapterDetailsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "217"
+                  endingLineNumber = "217"
+                  offsetFromSymbolStart = "452">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F3C377B-CAB0-4A37-A0D0-AF74C80B0BF4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ULURN/CourseDetailsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

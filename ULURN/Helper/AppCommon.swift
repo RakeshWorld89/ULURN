@@ -16,8 +16,7 @@ class AppCommon {
             let sceneDelegate = UIApplication.shared.connectedScenes
                 .first!.delegate as! SceneDelegate
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ok", style: .default) {
-                UIAlertAction in
+            let okAction = UIAlertAction(title: "Ok", style: .default) { UIAlertAction in
             }
             alertController.addAction(okAction)
             sceneDelegate.window?.rootViewController?.present(alertController, animated: true, completion: nil)

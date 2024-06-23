@@ -31,6 +31,7 @@ class CourseDetailsViewController: UIViewController {
         self.courseDetailsTableView.tableFooterView = nil
         
         self.activityIndicatorView = showIndicator(withTitle: "", and: "Loading Chapters...")
+        self.view.isUserInteractionEnabled = false
         AppCommon.triggerLatestTokenWebService() { (isTokenGenerated) in
             if isTokenGenerated == true {
                 self.loadAllCourseSectionsAndItsChapters()
@@ -46,6 +47,7 @@ class CourseDetailsViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         //self.navigationController?.navigationBar.topItem?.title = courseNameSelected
         self.navigationController?.navigationBar.backItem?.title = ""
+        self.courseDetailsTableView.reloadData()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,6 +72,7 @@ class CourseDetailsViewController: UIViewController {
                 let errorMessage = (response?.responseData)?.components(separatedBy: ":")
                 AppCommon.showAlert(title: Constants.UNKNOWN_ERROR_TITLE, message: errorMessage?[1] ?? "")
             }
+            self?.view.isUserInteractionEnabled = true
         }
     }
     
@@ -105,7 +108,7 @@ extension CourseDetailsViewController: UITableViewDataSource, UITableViewDelegat
         let selectedChapterCell = tableView.cellForRow(at: indexPath) as! CourseModuleDetailsTableViewCell
         
         let chapterDetailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChapterDetailsViewController") as! ChapterDetailsViewController
-        chapterDetailsVC.courseAndModuleName = self.courseModuleName
+        chapterDetailsVC.courseAndModuleName = courseModules[indexPath.section].sectionName
         chapterDetailsVC.chapterName = selectedChapterCell.courseModuleDetailNameLabel.text
         chapterDetailsVC.chapterId = courseModules[indexPath.section].chapters[indexPath.row].chapterId
         self.navigationController?.pushViewController(chapterDetailsVC, animated: true)
@@ -122,7 +125,7 @@ extension CourseDetailsViewController: UITableViewDataSource, UITableViewDelegat
         header.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCourseModuleHeader(_:))))
         
         header.courseModuleNameLabel.text = courseModules[section].sectionName
-        self.courseModuleName = header.courseModuleNameLabel.text
+        //self.courseModuleName = header.courseModuleNameLabel.text
         header.codeNumberLabel.text = "\(courseModules[section].sectionId ?? 0)"
         header.setCollapsed(courseModules[section].collapsed!)
         
