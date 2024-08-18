@@ -46,7 +46,8 @@ class ChapterDetailsViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.navigationBar.backItem?.title = ""
         self.appDelegate.orientation = .portrait
-        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        //UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        DeviceOrientation.shared.set(orientation: .portrait)
 
         fetchAllProductLectures()
     }
@@ -157,7 +158,7 @@ extension ChapterDetailsViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedLectureVideoCell = tableView.cellForRow(at: indexPath) as! LectureVideoTableViewCell
+        _ = tableView.cellForRow(at: indexPath) as! LectureVideoTableViewCell
         selectedLectureId = Int(self.allLecturesData[indexPath.row].lectureUniqueId)
         durationOfSelectedLecture = self.allLecturesData[indexPath.row].duration
         

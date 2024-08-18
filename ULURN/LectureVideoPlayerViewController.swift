@@ -27,7 +27,8 @@ class LectureVideoPlayerViewController: AVPlayerViewController, AVPlayerViewCont
         
         // guard let path = Bundle.main.path(forResource: "SampleVideo", ofType:"mp4") else { return }
         self.appDelegate.orientation = .landscape
-        UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+        //UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+        DeviceOrientation.shared.set(orientation: .landscapeLeft)
         self.transitioningDelegate = self
         
         self.player = AVPlayer(url: URL(string: lectureURL!)!)
@@ -37,7 +38,7 @@ class LectureVideoPlayerViewController: AVPlayerViewController, AVPlayerViewCont
         
         durationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             self?.remainingDuration -= 1.0
-            print(self?.remainingDuration)
+            //print(self?.remainingDuration)
             if self?.remainingDuration == 0 {
                 self?.durationTimer?.invalidate()
                 if self?.player?.timeControlStatus == .playing {
@@ -89,7 +90,8 @@ class LectureVideoPlayerViewController: AVPlayerViewController, AVPlayerViewCont
     
     func resetOrientation() {
         self.appDelegate.orientation = .portrait
-        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        //UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        DeviceOrientation.shared.set(orientation: .portrait)
     }
     
     func calculateRemainingLectureDuration() {

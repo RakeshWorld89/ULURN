@@ -30,6 +30,7 @@
 		616B5F7E2C230474001F339D /* Lecture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B5F7C2C230474001F339D /* Lecture+CoreDataClass.swift */; };
 		616B5F7F2C230474001F339D /* Lecture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B5F7D2C230474001F339D /* Lecture+CoreDataProperties.swift */; };
 		616B5F812C2304E6001F339D /* LectureDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616B5F802C2304E6001F339D /* LectureDetailsModel.swift */; };
+		617274AA2C7252D6006B5AD7 /* DeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617274A92C7252D6006B5AD7 /* DeviceOrientation.swift */; };
 		617290B52BFA5243006C295E /* MyCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617290B32BFA5243006C295E /* MyCourseTableViewCell.swift */; };
 		617290B62BFA5243006C295E /* MyCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 617290B42BFA5243006C295E /* MyCourseTableViewCell.xib */; };
 		617290B82BFA53E4006C295E /* MyCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617290B72BFA53E4006C295E /* MyCoursesViewController.swift */; };
@@ -76,6 +77,7 @@
 		616B5F7C2C230474001F339D /* Lecture+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lecture+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		616B5F7D2C230474001F339D /* Lecture+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lecture+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		616B5F802C2304E6001F339D /* LectureDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureDetailsModel.swift; sourceTree = "<group>"; };
+		617274A92C7252D6006B5AD7 /* DeviceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOrientation.swift; sourceTree = "<group>"; };
 		617290B32BFA5243006C295E /* MyCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCourseTableViewCell.swift; sourceTree = "<group>"; };
 		617290B42BFA5243006C295E /* MyCourseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCourseTableViewCell.xib; sourceTree = "<group>"; };
 		617290B72BFA53E4006C295E /* MyCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCoursesViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				612BF1232C0F03F500551F95 /* ApiManager.swift */,
 				614FF6CC2C0CD3610044A3A5 /* Constants.swift */,
 				614FF6CF2C0CD8660044A3A5 /* NetworkRequest.swift */,
+				617274A92C7252D6006B5AD7 /* DeviceOrientation.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				616B5F7E2C230474001F339D /* Lecture+CoreDataClass.swift in Sources */,
 				612BF11F2C0F011300551F95 /* CreateTokenModel.swift in Sources */,
 				61DE05382C176B8F00BBA9F2 /* CourseLicense+CoreDataClass.swift in Sources */,
+				617274AA2C7252D6006B5AD7 /* DeviceOrientation.swift in Sources */,
 				617290B82BFA53E4006C295E /* MyCoursesViewController.swift in Sources */,
 				61CABCBD2BFB3B530021D45F /* CourseModuleDetailsTableViewCell.swift in Sources */,
 				612EA74A2C2336FD00C7C971 /* LectureURLDetailsModel.swift in Sources */,
@@ -446,7 +450,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -503,7 +507,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -528,6 +532,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -556,6 +561,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
